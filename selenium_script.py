@@ -1,9 +1,8 @@
-import shutil
-import time
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
+import time
 
 def create_driver():
     chrome_options = Options()
@@ -12,13 +11,9 @@ def create_driver():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
 
-    chromedriver_path = shutil.which("chromedriver")
-    if not chromedriver_path:
-        raise ValueError("ChromeDriver 실행 파일을 찾을 수 없습니다.")
-
-    service = Service(chromedriver_path)
+    service = Service("/usr/bin/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
-
+    
     return driver
 
 
