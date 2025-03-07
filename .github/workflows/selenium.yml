@@ -1,28 +1,28 @@
 name: Run Selenium STTH SignUp
 
 on:
-  workflow_dispatch:
-    inputs:
-      id:
-        description: "ID"
-        required: true
-        type: string
-      pw:
-        description: "Password"
-        required: true
-        type: string
-      name:
-        description: "Name"
-        required: true
-        type: string
-      phone:
-        description: "PhoneNumber"
-        required: true
-        type: string
-      mail:
-        description: "Email"
-        required: true
-        type: string
+  # workflow_dispatch:
+  #   inputs:
+  #     id:
+  #       description: "ID"
+  #       required: true
+  #       type: string
+  #     pw:
+  #       description: "Password"
+  #       required: true
+  #       type: string
+  #     name:
+  #       description: "Name"
+  #       required: true
+  #       type: string
+  #     phone:
+  #       description: "PhoneNumber"
+  #       required: true
+  #       type: string
+  #     mail:
+  #       description: "Email"
+  #       required: true
+  #       type: string
 
   repository_dispatch:
     types: [trigger-selenium]
@@ -53,11 +53,11 @@ jobs:
         run: |
           echo "✅ Selenium 실행 중..."
           python selenium_script.py \
-            --id "${{ github.event.inputs.id || github.event.client_payload.id }}" \
-            --pw "${{ github.event.inputs.pw || github.event.client_payload.pw }}" \
-            --name "${{ github.event.inputs.name || github.event.client_payload.name }}" \
-            --phone "${{ github.event.inputs.phone || github.event.client_payload.phone }}" \
-            --mail "${{ github.event.inputs.mail || github.event.client_payload.mail }}"
+            --id "${{ github.event.client_payload.id }}" \
+            --pw "${{ github.event.client_payload.pw }}" \
+            --name "${{ github.event.client_payload.name }}" \
+            --phone "${{ github.event.client_payload.phone }}" \
+            --mail "${{ github.event.client_payload.mail }}"
 
 
 
