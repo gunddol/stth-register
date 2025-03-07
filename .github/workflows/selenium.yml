@@ -53,10 +53,13 @@ jobs:
       - name: 저장소 체크아웃
         uses: actions/checkout@v3
 
-      - name: 시스템 기본 Chrome 및 ChromeDriver 확인
+      - name: 기본 Chrome 및 ChromeDriver 경로 확인
         run: |
+          echo "🟢 기본 Chrome 및 ChromeDriver 버전 확인"
           google-chrome --version
+          which google-chrome
           chromedriver --version
+          which chromedriver
 
       - name: Python 및 Selenium 설치
         run: |
