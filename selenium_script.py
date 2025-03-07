@@ -78,11 +78,11 @@ def swing2app_register(driver, id, pw, name):
 def main():
     driver = create_driver()
     try:
-        test_id = "testman6"
+        test_id = "testman7"
         test_pw = "tman1004tman!!"
-        test_name = "테스트맨6"
+        test_name = "테스트맨7"
         test_phone = "010-1234-5678"
-        test_mail = "testman5@test.com"
+        test_mail = "testman7@test.com"
 
         cafe24_register(driver, test_id, test_pw, test_name, test_phone, test_mail)
         swing2app_register(driver, test_id, test_pw, test_name)
