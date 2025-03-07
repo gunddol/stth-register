@@ -1,32 +1,32 @@
 name: Run Selenium STTH SignUp
 
 on:
-  # workflow_dispatch:
-  #   inputs:
-  #     id:
-  #       description: "ID"
-  #       required: true
-  #       type: string
-  #     pw:
-  #       description: "Password"
-  #       required: true
-  #       type: string
-  #     name:
-  #       description: "Name"
-  #       required: true
-  #       type: string
-  #     phone:
-  #       description: "PhoneNumber"
-  #       required: true
-  #       type: string
-  #     mail:
-  #       description: "Email"
-  #       required: true
-  #       type: string
-
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "ID"
+        required: true
+        type: string
+      pw:
+        description: "Password"
+        required: true
+        type: string
+      name:
+        description: "Name"
+        required: true
+        type: string
+      phone:
+        description: "PhoneNumber"
+        required: true
+        type: string
+      mail:
+        description: "Email"
+        required: true
+        type: string
   repository_dispatch:
     types: [trigger-selenium]
 
+    
 jobs:
   run-selenium:
     runs-on: ubuntu-latest
@@ -37,28 +37,24 @@ jobs:
 
       - name: 기본 Chrome 및 ChromeDriver 확인
         run: |
-          echo "✅ Chrome 및 ChromeDriver 버전 확인 중..."
-          google-chrome --version || echo "❌ Chrome이 설치되지 않음"
-          which google-chrome || echo "❌ Chrome 경로를 찾을 수 없음"
-          chromedriver --version || echo "❌ ChromeDriver가 설치되지 않음"
-          which chromedriver || echo "❌ ChromeDriver 경로를 찾을 수 없음"
+          google-chrome --version
+          which google-chrome
+          chromedriver --version
+          which chromedriver
 
       - name: Python 및 Selenium 설치
         run: |
-          echo "✅ Python 및 Selenium 설치 중..."
           python -m pip install --upgrade pip
-          pip install selenium requests || echo "❌ Selenium 설치 실패"
+          pip install selenium requests
 
       - name: Selenium 스크립트 실행 (입력값 전달)
         run: |
-          echo "✅ Selenium 실행 중..."
           python selenium_script.py \
-            --id "${{ github.event.client_payload.id }}" \
-            --pw "${{ github.event.client_payload.pw }}" \
-            --name "${{ github.event.client_payload.name }}" \
-            --phone "${{ github.event.client_payload.phone }}" \
-            --mail "${{ github.event.client_payload.mail }}"
-
+            --id "${{ github.event.inputs.id }}" \
+            --pw "${{ github.event.inputs.pw }}" \
+            --name "${{ github.event.inputs.name }}" \
+            --phone "${{ github.event.inputs.phone }}" \
+            --mail "${{ github.event.inputs.mail }}"
 
 
 
