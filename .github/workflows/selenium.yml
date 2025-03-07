@@ -1,9 +1,7 @@
 name: Run Selenium Test
 
 on:
-  workflow_dispatch:  # 수동 실행
-  schedule:
-    - cron: "0 * * * *"  # 매 정각 실행 (테스트용, 필요 시 수정)
+  workflow_dispatch:
 
 jobs:
   run-selenium:
@@ -13,21 +11,30 @@ jobs:
       - name: 저장소 체크아웃
         uses: actions/checkout@v3
 
-      - name: Chrome 및 Selenium 설치
+      - name: Chrome 및 ChromeDriver 최신 버전 설치
         run: |
           sudo apt-get update
           sudo apt-get install -y wget unzip xvfb
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
-          wget https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          chromedriver --version
+
+          # Chrome 버전 확인
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          echo "✅ Installed Chrome version: $CHROME_VERSION"
+
+          # ChromeDriver 다운로드 (설치된 Chrome 버전에 맞게)
+          DRIVER_VERSION=$(curl -sS "https://googlechromelabs.github.io/chrome-for-testing/latest-patch-versions.json" | jq -r --arg CHROME_VERSION "$CHROME_VERSION" '.channels.Stable[$CHROME_VERSION]')
+          wget "https://storage.googleapis.com/chrome-for-testing-public/$CHROME_VERSION/linux64/chromedriver-linux64.zip"
+          unzip chromedriver-linux64.zip
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+          rm -rf chromedriver-linux64.zip chromedriver-linux64
+          
+          chromedriver --version  # 설치된 버전 확인
 
       - name: Python 및 Selenium 설치
         run: |
           python -m pip install --upgrade pip
-          pip install selenium requests
+          pip install selenium requests jq
 
       - name: Selenium 스크립트 실행
         run: python selenium_script.py

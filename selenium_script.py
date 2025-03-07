@@ -6,14 +6,16 @@ import time
 
 def create_driver():
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  # 브라우저 창 없이 실행
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
 
-    service = Service("/usr/local/bin/chromedriver")  # GitHub Actions 환경에 맞게 수정
+    service = Service("/usr/local/bin/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
+    
     return driver
+
 
 def cafe24_register(driver, id, pw, name, phone, mail):
     target_url = "https://suraktantan.cafe24.com/member/agreement.html"
