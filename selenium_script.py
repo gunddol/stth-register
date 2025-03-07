@@ -2,7 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-import time
+import time 
+import argparse
 
 def create_driver():
     chrome_options = Options()
@@ -76,13 +77,21 @@ def swing2app_register(driver, id, pw, name):
     time.sleep(3)
 
 def main():
+    parser = argparse.ArgumentParser(description="Run Selenium script with arguments")
+    parser.add_argument("--id", required=True, help="ID")
+    parser.add_argument("--pw", required=True, help="Password")
+    parser.add_argument("--name", required=True, help="Name")
+    parser.add_argument("--phone", required=True, help="PhoneNumber")
+    parser.add_argument("--mail", required=True, help="Email")
+    args = parser.parse_args()
+
     driver = create_driver()
     try:
-        test_id = "testman7"
-        test_pw = "tman1004tman!!"
-        test_name = "테스트맨7"
-        test_phone = "010-1234-5678"
-        test_mail = "testman7@test.com"
+        test_id = args.id
+        test_pw = args.pw
+        test_name = args.name
+        test_phone = args.phone
+        test_mail = args.mail
 
         cafe24_register(driver, test_id, test_pw, test_name, test_phone, test_mail)
         swing2app_register(driver, test_id, test_pw, test_name)
