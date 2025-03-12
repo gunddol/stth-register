@@ -21,9 +21,10 @@ def create_driver():
 def cafe24_register(driver, id, pw, name, phone, mail):
     target_url = "https://suraktantan.cafe24.com/member/agreement.html"
     driver.get(target_url)
-    time.sleep(5)
+    time.sleep(10)
 
-    driver.find_element(By.ID, "sAgreeAllChecked").click()
+    check_element = driver.find_element(By.ID, "sAgreeAllChecked")
+    driver.execute_script("arguments[0].click();", check_element)
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR, "div.ec-base-button.gBottom button").click()
     time.sleep(1)
