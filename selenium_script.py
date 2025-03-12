@@ -94,7 +94,7 @@ def main():
         test_mail = args.mail
 
         cafe24_register(driver, test_id, test_pw, test_name, test_phone, test_mail)
-        swing2app_register(driver, test_id, test_pw, test_name)
+        # swing2app_register(driver, test_id, test_pw, test_name)
 
         with open("output.txt", "w") as f:
             f.write("✅ Registration successful!")
