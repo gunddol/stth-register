@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import argparse
+import time
 
 def create_driver():
     chrome_options = Options()
@@ -69,7 +70,9 @@ def cafe24_register(driver, id, pw, name, phone, mail):
 
         # 가입 버튼 클릭
         submit_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div.ec-base-button.gBottom a:nth-child(2)")))
-        submit_button.click()
+        driver.execute_script("arguments[0].click();", submit_button)
+        
+        time.sleep(3)
     
     except Exception as e:
         print(f"❌ Error during registration: {str(e)}")
